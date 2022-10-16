@@ -1,15 +1,15 @@
-drop table if exists Musicians cascasde;
-drop table if exists Instrument cascasde;
-drop table if exists Album cascade;
-drop table if exists Song cascade;
-drop table if exists Place cascade;
-drop table if exists Telephone cascade;
-drop table if exists Home cascade;
-drop table if exists Lives cascade;
-drop table if exists Plays cascade;
-drop table if exists Perform cascade;
-drop table if exists Produce cascade;
-drop table if exists Appear cascade;
+Drop Table if exists Musicians cascade;
+drop Table if exists Instrument cascade;
+drop Table if exists Album cascade;
+drop Table if exists Song cascade;
+DROP TABLE IF EXISTS Place cascade;
+DROP TABLE IF EXISTS Telephone cascade;
+DROP TABLE IF EXISTS Home cascade;
+DROP TABLE IF EXISTS Lives cascade;
+DROP TABLE IF EXISTS Plays cascade;
+DROP TABLE IF EXISTS Perform cascade;
+DROP TABLE IF EXISTS Produce cascade;
+DROP TABLE IF EXISTS Appear cascade;
 
 create table Musicians(	ssn integer not null,
 			name char(20),
@@ -34,7 +34,8 @@ create table Song(	song_id integer not null,
 create table Place(	address char(30) not null,
 			Primary Key(address));
 
-create table Telephone( phone_number integer not null);
+create table Telephone( phone_number integer not null,
+			Primary Key(phone_number));
 
 create table Home(	address char(30) not null,
 			phone_number integer not null,
@@ -45,7 +46,7 @@ create table Home(	address char(30) not null,
 create table Lives(	address char(30) not null,
 			ssn integer not null,
 			Primary Key(ssn, address),
-			Foreign Key(ssn) REFERENCES Musician(ssn),
+			Foreign Key(ssn) REFERENCES Musicians(ssn),
 			Foreign Key(address) REFERENCES Home(address));
 
 create table Plays(	ssn integer not null,
