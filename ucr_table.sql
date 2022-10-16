@@ -1,8 +1,15 @@
-DROP TABLE Professor;
-DROP TABLE Dept;
-DROP TABLE Project;
-DROP TABLE Graduate;
-DROP TABLE Work_dept;
+DROP TABLE IF EXISTS Professor;
+DROP TABLE IF EXISTS Dept;
+DROP TABLE IF EXISTS Project;
+DROP TABLE IF EXISTS Graduate;
+DROP TABLE IF EXISTS work_dept;
+DROP TABLE IF EXISTS Runs;
+DROP TABLE IF EXISTS work_proj;
+DROP TABLE IF EXISTS advise;
+DROP TABLE IF EXISTS supervise;
+DROP TABLE IF EXISTS major;
+DROP TABLE IF EXISTS manage;
+DROP TABLE IF EXISTS work_in;
 
 
 CREATE TABLE Professor( ssn INTEGER NOT NULL,
@@ -30,11 +37,50 @@ CREATE TABLE Graduate(	ssn integer not null,
 			deg_pg char(20),
 			PRIMARY KEY(ssn));
 
-CREATE TABLE Work_dept(	time_pc integer,
+CREATE TABLE work_dept(	time_pc integer,
 			ssn integer not null,
 			dno integer not null,
 			PRIMARY KEY(ssn, dno),
 			FOREIGN KEY(ssn) REFERENCES Professor(ssn),
-			FORIEGN KEY(dno) REFERENCES Dept(dno));
+			FOREIGN KEY(dno) REFERENCES Dept(dno));
 
-CREATE TABLE 
+CREATE TABLE Runs (	ssn integer not null,
+			dno integer not null,
+			PRIMARY KEY(ssn),
+			FOREIGN KEY(ssn) REFERENCES Professor(ssn));
+
+CREATE TABLE work_proj(	since integer,
+			ssn integer not null,
+			pno integer not null,
+			PRIMARY KEY(ssn, pno),
+			FOREIGN KEY(ssn) REFERENCES Graduate(ssn),
+			FOREIGN KEY(pno) REFERENCES Project(pno));
+
+CREATE TABLE advise( 	grad integer,
+			senior integer,
+			PRIMARY KEY(grad, senior),
+			FOREIGN KEY(grad) REFERENCES Graduate(ssn),
+			FOREIGN KEY(senior) REFERENCES Graduate(ssn));
+
+CREATE TABLE major(	ssn integer not null,
+			dno integer not null,
+			PRIMARY KEY(dno),
+			FOREIGN KEY(dno) REFERENCES Dept(dno));
+
+CREATE TABLE supervise(	ssn integer not null,
+			pno integer not null,
+			PRIMARY KEY(ssn),
+			FOREIGN KEY(ssn) REFERENCES Professor(ssn));
+
+CREATE TABLE manage(	ssn integer not null,
+			pno integer not null,
+			PRIMARY KEY(ssn),
+			FOREIGN KEY(ssn) REFERENCES Professor(ssn));
+
+CREATE TABLE work_in(	ssn integer not null,
+			pno integer not null,
+			PRIMARY KEY(ssn, pno),
+			FOREIGN KEY(ssn) REFERENCES Professor(ssn),
+			FOREIGN KEY(pno) REFERENCES Project(pno));
+
+
